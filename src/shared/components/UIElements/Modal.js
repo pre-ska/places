@@ -13,13 +13,15 @@ const ModalOverlay = props => {
       </header>
       <form
         onSubmit={
-          props.onSubmit ? props.onSubmit : event => event.preventDefault
+          props.onSubmit ? props.onSubmit : event => event.preventDefault()
         }
       >
         <div className={`modal__content ${props.contentClass}`}>
           {props.children}
         </div>
-        <footer className={`modal__footer ${props.footerClass}`}></footer>
+        <footer className={`modal__footer ${props.footerClass}`}>
+          {props.footer}
+        </footer>
       </form>
     </div>
   );
@@ -29,19 +31,16 @@ const ModalOverlay = props => {
 const Modal = props => {
   return (
     <>
-      {props.show && (
-        <Backdrop onClick={props.onCancel}>
-          <CSSTransition
-            in={props.show}
-            mountOnEnter
-            unmountOnExit
-            timeout={200}
-            classNames="modal"
-          >
-            <ModalOverlay {...props} />
-          </CSSTransition>
-        </Backdrop>
-      )}
+      {props.show && <Backdrop onClick={props.onCancel} />}
+      <CSSTransition
+        in={props.show}
+        mountOnEnter
+        unmountOnExit
+        timeout={200}
+        classNames="modal"
+      >
+        <ModalOverlay {...props} />
+      </CSSTransition>
     </>
   );
 };
