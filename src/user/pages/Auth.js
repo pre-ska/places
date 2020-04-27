@@ -62,10 +62,10 @@ const Auth = () => {
   const authSubmitHandler = async e => {
     e.preventDefault();
 
-    //refactoring 10-11
+    //refactoring 10-11...10-13
     if (isLoginMode) {
       try {
-        await sendRequest(
+        const responseData = await sendRequest(
           "http://localhost:5000/api/users/login",
           "POST",
           JSON.stringify({
@@ -77,11 +77,11 @@ const Auth = () => {
           }
         );
 
-        auth.login();
+        auth.login(responseData.user.id);
       } catch (error) {}
     } else {
       try {
-        await sendRequest(
+        const responseData = await sendRequest(
           "http://localhost:5000/api/users/signup",
           "POST",
           JSON.stringify({
@@ -106,7 +106,7 @@ const Auth = () => {
         // //ako je bilo errora 400-neki ili 500-neki ovo se nece izvesti
         // setIsLoading(false);
 
-        auth.login();
+        auth.login(responseData.user.id);
       } catch (error) {
         // console.log(error);
         // setIsLoading(false);
