@@ -14,6 +14,7 @@ import { AuthContext } from "../../shared/context/auth-context";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import { useHttpClient } from "../../shared/hooks/http-hook";
+import ImageUpload from "../../shared/components/FormElements/ImageUpload";
 
 const Auth = () => {
   const auth = useContext(AuthContext);
@@ -41,6 +42,7 @@ const Auth = () => {
         {
           ...formState.inputs,
           name: undefined,
+          image: undefined,
         },
         formState.inputs.email.isValid && formState.inputs.password.isValid
       );
@@ -52,6 +54,10 @@ const Auth = () => {
             value: "",
             isValid: false,
           },
+          image: {
+            value: null,
+            isValid: false,
+          },
         },
         false
       );
@@ -61,6 +67,7 @@ const Auth = () => {
 
   const authSubmitHandler = async e => {
     e.preventDefault();
+    console.log(formState.inputs);
 
     //refactoring 10-11...10-13
     if (isLoginMode) {
@@ -77,21 +84,30 @@ const Auth = () => {
           }
         );
 
-        auth.login(responseData.user.id);
+        auth.login(responseData.userId, responseData.token);
       } catch (error) {}
     } else {
       try {
+        //FormData je standarni browser api - dodaje (appenda) na req.body
+        // trebam ga jer nemogu poslati sliku kao application/json
+        // ako korsitim FormData...automatski se postave headeri...a osim toga nemoram JSON.stingify jer sam napravio req.body na drugaciji nacin - sa append()
+        const formData = new FormData();
+        formData.append("email", formState.inputs.email.value);
+        formData.append("name", formState.inputs.name.value);
+        formData.append("password", formState.inputs.password.value);
+        formData.append("image", formState.inputs.image.value);
         const responseData = await sendRequest(
           "http://localhost:5000/api/users/signup",
           "POST",
-          JSON.stringify({
-            name: formState.inputs.name.value,
-            email: formState.inputs.email.value,
-            password: formState.inputs.password.value,
-          }),
-          {
-            "Content-Type": "application/json",
-          }
+          formData
+          // JSON.stringify({
+          //   name: formState.inputs.name.value,
+          //   email: formState.inputs.email.value,
+          //   password: formState.inputs.password.value,
+          // }),
+          // {
+          //   "Content-Type": "application/json",
+          // }
         );
 
         // const responseData = await response.json();
@@ -106,7 +122,7 @@ const Auth = () => {
         // //ako je bilo errora 400-neki ili 500-neki ovo se nece izvesti
         // setIsLoading(false);
 
-        auth.login(responseData.user.id);
+        auth.login(responseData.userId, responseData.token);
       } catch (error) {
         // console.log(error);
         // setIsLoading(false);
@@ -137,6 +153,15 @@ const Auth = () => {
             />
           )}
 
+          {!isLoginMode && (
+            <ImageUpload
+              center
+              id="image"
+              onInput={inputHandler}
+              errorText="Please provide an image"
+            />
+          )}
+
           <Input
             id="email"
             element="input"
@@ -155,6 +180,7 @@ const Auth = () => {
             errorText="Please enter at least 6 characters"
             onInput={inputHandler}
           />
+
           <Button type="submit" disabled={!formState.isValid}>
             {isLoginMode ? "LOGIN" : "SIGNUP"}
           </Button>
