@@ -17,7 +17,7 @@ import { useAuth } from "./shared/hooks/auth-hook";
 
 const App = () => {
   const { token, login, logout, userId } = useAuth();
-
+  //refatoring 12-16
   let routes;
 
   if (token) {
