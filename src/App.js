@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -21,7 +21,6 @@ const App = () => {
   let routes;
 
   if (token) {
-    console.log("ima!!!!!!!!!!! tokena");
     routes = (
       <Switch>
         <Route exact path="/">
@@ -44,7 +43,6 @@ const App = () => {
       </Switch>
     );
   } else {
-    console.log("nema tokena");
     routes = (
       <Switch>
         <Route exact path="/">

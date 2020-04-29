@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PlaceList from "../components/PlaceList";
 import { useParams } from "react-router-dom";
-import Button from "../../shared/components/FormElements/Button";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
@@ -15,7 +14,7 @@ const UserPlaces = () => {
     const fetchPlaces = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/api/places/user/${userId}`
+          `${process.env.REACT_APP_BACKEND_URL}/places/user/${userId}`
         );
         setLoadedPlaces(responseData.places);
       } catch (error) {}
