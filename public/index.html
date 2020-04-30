@@ -30,9 +30,26 @@
       async
       defer
     ></script>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <!-- <script defer src="/__/firebase/7.14.2/firebase-app.js"></script>
+    <script defer src="/__/firebase/7.14.2/firebase-auth.js"></script>
+    <script defer src="/__/firebase/7.14.2/firebase-storage.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+    <!-- Initialize Firebase -->
+    <!-- <script defer src="/__/firebase/init.js"></script>
+
+    <script>
+      const fbAuth = firebase.auth();
+      const fbStorage = firebase.storage();
+    </script> -->
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+
     <div id="backdrop-hook"></div>
     <div id="modal-hook"></div>
     <div id="drawer-hook"></div>
@@ -47,5 +64,27 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-storage.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyB5at5CZu5Q-_BIHyY4GcjeRJqb4tA3akM",
+        authDomain: "places-mern-c8f5b.firebaseapp.com",
+        databaseURL: "https://places-mern-c8f5b.firebaseio.com",
+        projectId: "places-mern-c8f5b",
+        storageBucket: "places-mern-c8f5b.appspot.com",
+        messagingSenderId: "1084883030583",
+        appId: "1:1084883030583:web:e563d43d81320de1dce5b2",
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
   </body>
 </html>

@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "build",
+    "site": "places-mern-c8f5b",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "storage": {
+    "rules": "storage.rules"
+  }
+}

@@ -16,6 +16,7 @@ import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import ImageUpload from "../../shared/components/FormElements/ImageUpload";
 
 const NewPlace = () => {
+  const ref = window.firebase.storage().ref();
   const auth = useContext(AuthContext);
 
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -45,20 +46,55 @@ const NewPlace = () => {
 
   const placeSubmitHandler = async e => {
     e.preventDefault();
+    const name = Date.now() + formState.inputs.image.value.name;
+    const imageRef = ref.child(name);
 
+    const snapshot = await imageRef.put(formState.inputs.image.value);
+
+    const imageUrl = await snapshot.ref.getDownloadURL();
+
+    // imageRef
+    //   .put(formState.inputs.image.value)
+    //   .then(snapshot => snapshot.ref.getDownloadURL())
+    //   .then(imageUrl =>
+    //     sendRequest(
+    //       process.env.REACT_APP_BACKEND_URL + "/places",
+    //       "POST",
+    //       JSON.stringify({
+    //         title: formState.inputs.title.value,
+    //         description: formState.inputs.description.value,
+    //         address: formState.inputs.address.value,
+    //         image: imageUrl,
+    //       }),
+    //       {
+    //         "Content-Type": "application/json",
+    //         Authorization: "Bearer " + auth.token,
+    //       }
+    //     )
+    //   )
+    //   .then(response => history.push("/"))
+    //   .catch(err => {});
     try {
       //11-9
       // vec opisano u Auth.js ... line 95
-      const formData = new FormData();
-      formData.append("title", formState.inputs.title.value);
-      formData.append("description", formState.inputs.description.value);
-      formData.append("address", formState.inputs.address.value);
-      formData.append("image", formState.inputs.image.value);
+      // const formData = new FormData();
+      // formData.append("title", formState.inputs.title.value);
+      // formData.append("description", formState.inputs.description.value);
+      // formData.append("address", formState.inputs.address.value);
+      // formData.append("image", formState.inputs.image.value);
       await sendRequest(
         process.env.REACT_APP_BACKEND_URL + "/places",
         "POST",
-        formData,
+        // formData,
+
+        JSON.stringify({
+          title: formState.inputs.title.value,
+          description: formState.inputs.description.value,
+          address: formState.inputs.address.value,
+          image: imageUrl,
+        }),
         {
+          "Content-Type": "application/json",
           Authorization: "Bearer " + auth.token,
         }
       );
