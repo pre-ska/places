@@ -46,12 +46,12 @@ const NewPlace = () => {
 
   const placeSubmitHandler = async e => {
     e.preventDefault();
-    const name = Date.now() + formState.inputs.image.value.name;
-    const imageRef = ref.child(name);
+    // const name = Date.now() + formState.inputs.image.value.name;
+    // const imageRef = ref.child(name);
 
-    const snapshot = await imageRef.put(formState.inputs.image.value);
+    // const snapshot = await imageRef.put(formState.inputs.image.value);
 
-    const imageUrl = await snapshot.ref.getDownloadURL();
+    // const imageUrl = await snapshot.ref.getDownloadURL();
 
     // imageRef
     //   .put(formState.inputs.image.value)
@@ -91,11 +91,16 @@ const NewPlace = () => {
           title: formState.inputs.title.value,
           description: formState.inputs.description.value,
           address: formState.inputs.address.value,
-          image: imageUrl,
+          // image: imageUrl,
         }),
         {
           "Content-Type": "application/json",
           Authorization: "Bearer " + auth.token,
+        },
+        {
+          // prebacio sam uplodanje slika u http-hook - fireStorage argument
+          image: formState.inputs.image.value,
+          ref: ref,
         }
       );
 

@@ -85,15 +85,19 @@ const Auth = () => {
           }
         );
 
-        auth.login(responseData.userId, responseData.token);
+        auth.login(
+          responseData.userId,
+          responseData.token,
+          responseData.avatar
+        );
       } catch (error) {}
     } else {
-      const name = Date.now() + formState.inputs.image.value.name;
-      const imageRef = ref.child(name);
+      // const name = Date.now() + formState.inputs.image.value.name;
+      // const imageRef = ref.child(name);
 
-      const snapshot = await imageRef.put(formState.inputs.image.value);
+      // const snapshot = await imageRef.put(formState.inputs.image.value);
 
-      const imageUrl = await snapshot.ref.getDownloadURL();
+      // const imageUrl = await snapshot.ref.getDownloadURL();
 
       // imageRef
       //   .put(formState.inputs.image.value)
@@ -139,10 +143,15 @@ const Auth = () => {
             name: formState.inputs.name.value,
             email: formState.inputs.email.value,
             password: formState.inputs.password.value,
-            image: imageUrl,
+            // image: imageUrl,
           }),
           {
             "Content-Type": "application/json",
+          },
+          {
+            // prebacio sam uplodanje slika u http-hook - fireStorage argument
+            image: formState.inputs.image.value,
+            ref: ref,
           }
         );
 
@@ -158,7 +167,11 @@ const Auth = () => {
         // //ako je bilo errora 400-neki ili 500-neki ovo se nece izvesti
         // setIsLoading(false);
 
-        auth.login(responseData.userId, responseData.token);
+        auth.login(
+          responseData.userId,
+          responseData.token,
+          responseData.avatar
+        );
       } catch (error) {
         //   // console.log(error);
         //   // setIsLoading(false);

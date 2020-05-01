@@ -9,8 +9,25 @@ export const useHttpClient = () => {
   const activeHttpRequest = useRef([]);
 
   const sendRequest = useCallback(
-    async (url, method = "GET", body = null, headers = {}) => {
+    // dodao sam fireStorage zbog uploada....dobijem firebase storage ref i image value
+    async (url, method = "GET", body_ = null, headers = {}, fireStorage) => {
       setIsLoading(true);
+
+      let body = body_;
+
+      // moj refactoring - ovo mi treab samo ako forma ima slike... signup i create new place... za login i update netrebam
+      if (fireStorage) {
+        const name = Date.now() + fireStorage.image.name;
+        const imageRef = fireStorage.ref.child(name);
+
+        const snapshot = await imageRef.put(fireStorage.image);
+
+        const imageUrl = await snapshot.ref.getDownloadURL();
+
+        body = JSON.parse(body);
+        body.image = imageUrl;
+        body = JSON.stringify(body);
+      }
 
       const httpAbortCtrl = new AbortController();
       activeHttpRequest.current.push(httpAbortCtrl);

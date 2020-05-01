@@ -8,19 +8,25 @@ export const useAuth = () => {
   const [token, setToken] = useState(false);
   const [tokenExpirationDate, setTokenExpirationDate] = useState();
   const [userId, setUserId] = useState(false);
+  const [avatar, setAvatar] = useState();
 
   //12-14 refacturing
-  const login = useCallback((uid, token, expirationDate) => {
+  const login = useCallback((uid, token, avatar, expirationDate) => {
     setToken(token);
     setUserId(uid);
+    setAvatar(avatar);
+
     const tokenExpirationDate =
       expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
+
     setTokenExpirationDate(tokenExpirationDate);
+
     localStorage.setItem(
       "userData",
       JSON.stringify({
         userId: uid,
         token: token,
+        avatar: avatar,
         expiration: tokenExpirationDate.toISOString(),
       })
     );
@@ -55,10 +61,11 @@ export const useAuth = () => {
       login(
         storedData.userId,
         storedData.token,
+        storedData.avatar,
         new Date(storedData.expiration)
       );
     }
   }, [login]);
 
-  return { token, login, logout, userId };
+  return { token, login, logout, userId, avatar };
 };

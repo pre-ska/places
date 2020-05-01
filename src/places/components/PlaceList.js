@@ -6,12 +6,19 @@ import { PlaceItem } from "./PlaceItem";
 import Button from "../../shared/components/FormElements/Button";
 
 const PlaceList = props => {
+  // zbog razlike u vlasniku ako nema places i u nekom useru ako nema places
   if (props.items.length === 0) {
     return (
       <div className="place-list center">
         <Card>
-          <h2>No places found. Maybe create one?</h2>
-          <Button to="/places/new">Share place</Button>
+          {props.owner === props.loggedInUser ? (
+            <>
+              <h2>No places found. Maybe create one?</h2>
+              <Button to="/places/new">Share place</Button>
+            </>
+          ) : (
+            <h2>This user didn't share any place yet</h2>
+          )}
         </Card>
       </div>
     );
