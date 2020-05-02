@@ -72,10 +72,14 @@ const UpdatePlace = () => {
       await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/places/${placeId}`,
         "PATCH",
-        JSON.stringify({
+        // JSON.stringify({
+        //   title: formState.inputs.title.value,
+        //   description: formState.inputs.description.value,
+        // }),
+        {
           title: formState.inputs.title.value,
           description: formState.inputs.description.value,
-        }),
+        },
         {
           "Content-Type": "application/json",
           Authorization: "Bearer " + auth.token,

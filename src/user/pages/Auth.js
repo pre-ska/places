@@ -17,8 +17,6 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import ImageUpload from "../../shared/components/FormElements/ImageUpload";
 
 const Auth = () => {
-  const ref = window.firebase.storage().ref();
-
   const auth = useContext(AuthContext);
 
   const [isLoginMode, setIsLoginMode] = useState(true);
@@ -76,10 +74,14 @@ const Auth = () => {
         const responseData = await sendRequest(
           process.env.REACT_APP_BACKEND_URL + "/users/login",
           "POST",
-          JSON.stringify({
+          {
             email: formState.inputs.email.value,
             password: formState.inputs.password.value,
-          }),
+          },
+          // JSON.stringify({
+          //   email: formState.inputs.email.value,
+          //   password: formState.inputs.password.value,
+          // }),
           {
             "Content-Type": "application/json",
           }
@@ -139,19 +141,22 @@ const Auth = () => {
           process.env.REACT_APP_BACKEND_URL + "/users/signup",
           "POST",
           // formData,
-          JSON.stringify({
+          {
             name: formState.inputs.name.value,
             email: formState.inputs.email.value,
             password: formState.inputs.password.value,
-            // image: imageUrl,
-          }),
-          {
-            "Content-Type": "application/json",
-          },
-          {
             // prebacio sam uplodanje slika u http-hook - fireStorage argument
             image: formState.inputs.image.value,
-            ref: ref,
+            // image: imageUrl,
+          },
+          // JSON.stringify({
+          //   name: formState.inputs.name.value,
+          //   email: formState.inputs.email.value,
+          //   password: formState.inputs.password.value,
+          //   // image: imageUrl,
+          // }),
+          {
+            "Content-Type": "application/json",
           }
         );
 

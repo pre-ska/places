@@ -16,7 +16,6 @@ import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import ImageUpload from "../../shared/components/FormElements/ImageUpload";
 
 const NewPlace = () => {
-  const ref = window.firebase.storage().ref();
   const auth = useContext(AuthContext);
 
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -87,20 +86,23 @@ const NewPlace = () => {
         "POST",
         // formData,
 
-        JSON.stringify({
+        {
           title: formState.inputs.title.value,
           description: formState.inputs.description.value,
           address: formState.inputs.address.value,
+          // prebacio sam uplodanje slika u http-hook
+          image: formState.inputs.image.value,
           // image: imageUrl,
-        }),
+        },
+        // JSON.stringify({
+        //   title: formState.inputs.title.value,
+        //   description: formState.inputs.description.value,
+        //   address: formState.inputs.address.value,
+        //   // image: imageUrl,
+        // }),
         {
           "Content-Type": "application/json",
           Authorization: "Bearer " + auth.token,
-        },
-        {
-          // prebacio sam uplodanje slika u http-hook - fireStorage argument
-          image: formState.inputs.image.value,
-          ref: ref,
         }
       );
 

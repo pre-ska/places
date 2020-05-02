@@ -9,23 +9,25 @@ export const useHttpClient = () => {
   const activeHttpRequest = useRef([]);
 
   const sendRequest = useCallback(
-    // dodao sam fireStorage zbog uploada....dobijem firebase storage ref i image value
-    async (url, method = "GET", body_ = null, headers = {}, fireStorage) => {
+    // dodao sam image u body na one pozive koji postaju img
+    async (url, method = "GET", body = null, headers = {}) => {
       setIsLoading(true);
 
-      let body = body_;
-
       // moj refactoring - ovo mi treab samo ako forma ima slike... signup i create new place... za login i update netrebam
-      if (fireStorage) {
-        const name = Date.now() + fireStorage.image.name;
-        const imageRef = fireStorage.ref.child(name);
+      if (body) {
+        if (body.image) {
+          const ref = window.firebase.storage().ref();
+          const name = Date.now() + body.image.name;
 
-        const snapshot = await imageRef.put(fireStorage.image);
+          const imageRef = ref.child(name);
 
-        const imageUrl = await snapshot.ref.getDownloadURL();
+          const snapshot = await imageRef.put(body.image);
 
-        body = JSON.parse(body);
-        body.image = imageUrl;
+          const imageUrl = await snapshot.ref.getDownloadURL();
+
+          body.image = imageUrl;
+        }
+        // prebacio stringify ovdje.... ali nema svaki req body...izbaci grešku na GET
         body = JSON.stringify(body);
       }
 
