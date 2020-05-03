@@ -1,11 +1,13 @@
-[DEMO](https://places-mern-c8f5b.web.app/)
-[BACKEND](https://github.com/pre-ska/places-backend)
+# WorldPlaces
 
-## WorldPlaces
+[DEMO](https://places-mern-c8f5b.web.app/)  
+[BACKEND PART](https://github.com/pre-ska/places-backend)
 
-# Mern stack app
+### Mern stack app
 
-# Post images of your visited places, with support of Google Maps
+##### Post images of your visited places, with support of Google Maps
+
+---
 
 Technologies used in this project:
 
@@ -13,6 +15,6 @@ Technologies used in this project:
 - Node/Express, backend app
 - Google APIs (Maps, Geolocation)
 - MongoDB Atlas as database
-- Heroku for backend app storage
+- Heroku for Express app
 - Firebase Hosting for React app
 - Firebase Storage for user content
