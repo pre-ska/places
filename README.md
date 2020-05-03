@@ -7,7 +7,9 @@
 
 ##### Post images of your visited places, with support of Google Maps
 
-## ![screenshot](https://i.imgur.com/O2i5xKA.png)
+<p align="center">
+  <img width="460" height="300" src="(https://i.imgur.com/O2i5xKA.png">
+</p>
 
 Technologies used in this project:
 
