@@ -20,3 +20,9 @@ Technologies used in this project:
 - Heroku for Express app
 - Firebase Hosting for React app
 - Firebase Storage for user content
+
+Mobile Friendly:
+
+<p align="center">
+  <img width="407" height="727" src="https://i.imgur.com/GbQ7iQC.gif">
+</p>
